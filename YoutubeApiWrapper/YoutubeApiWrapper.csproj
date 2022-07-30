@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Google.Apis.Core" />
+    <None Remove="Google.Apis.Auth" />
+    <None Remove="Google.Apis.YouTube.v3" />
+    <None Remove="Google.Apis" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Core" Version="1.57.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.57.0.2735" />
+    <PackageReference Include="Google.Apis" Version="1.57.0" />
+  </ItemGroup>
+</Project>
