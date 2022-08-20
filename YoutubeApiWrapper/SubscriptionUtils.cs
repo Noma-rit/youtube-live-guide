@@ -15,6 +15,11 @@ namespace YoutubeApiWrapper
         public async static Task<string[]> GetMySubscriptionChannelIds()
         {
             var credential = await CredentialUtils.SetFromJsonPathAsync(ClientSercretJson.FilePath);
+            return await GetMySubscriptionChannelIds(credential);
+        }
+
+        public async static Task<string[]> GetMySubscriptionChannelIds(UserCredential credential)
+        {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,

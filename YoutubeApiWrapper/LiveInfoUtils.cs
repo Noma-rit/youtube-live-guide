@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
@@ -14,15 +15,20 @@ namespace YoutubeApiWrapper
     {
         public static async Task<List<LiveInfo>> GetLiveInfo(string channelId)
         {
-            var upcomingLiveInfo = GetLiveInfo(channelId, EventTypeEnum.Upcoming);
-            var onAirLiveInfo = GetLiveInfo(channelId, EventTypeEnum.Live);
+            var credential = await CredentialUtils.SetFromJsonPathAsync(ClientSercretJson.FilePath);
+            return await GetLiveInfo(credential, channelId);
+        }
+
+        public static async Task<List<LiveInfo>> GetLiveInfo(UserCredential credential, string channelId)
+        {
+            var upcomingLiveInfo = GetLiveInfo(credential, channelId, EventTypeEnum.Upcoming);
+            var onAirLiveInfo = GetLiveInfo(credential, channelId, EventTypeEnum.Live);
             
             return (await upcomingLiveInfo).Concat(await onAirLiveInfo).ToList();
         }
 
-        private static async Task<List<LiveInfo>> GetLiveInfo(string channelId, EventTypeEnum eventType)
+        private static async Task<List<LiveInfo>> GetLiveInfo(UserCredential credential, string channelId, EventTypeEnum eventType)
         {
-            var credential = await CredentialUtils.SetFromJsonPathAsync(ClientSercretJson.FilePath);
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
