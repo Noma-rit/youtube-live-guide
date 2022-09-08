@@ -23,7 +23,7 @@ namespace YoutubeApiWrapper
         {
             var upcomingLiveInfo = GetLiveInfo(credential, channelId, EventTypeEnum.Upcoming);
             var onAirLiveInfo = GetLiveInfo(credential, channelId, EventTypeEnum.Live);
-            
+
             return (await upcomingLiveInfo).Concat(await onAirLiveInfo).ToList();
         }
 
@@ -40,7 +40,7 @@ namespace YoutubeApiWrapper
             var searchResults = await searchRequest.ExecuteAsync();
 
             var liveInfoList = new List<LiveInfo>();
-            foreach(var searchResult in searchResults.Items)
+            foreach (var searchResult in searchResults.Items)
             {
                 var liveId = searchResult.Id.VideoId;
                 var broadcastRequest = youtubeService.LiveBroadcasts.List("snippet");
